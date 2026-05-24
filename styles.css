@@ -629,8 +629,8 @@ main { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
 
 .price-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 14px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
 }
 .price-card {
   padding: 24px 20px;
