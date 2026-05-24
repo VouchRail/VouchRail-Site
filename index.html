@@ -1,0 +1,627 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#05060a" />
+  <title>VouchRail — Tamper-evident audit logs for high-risk AI · EU AI Act Article 12</title>
+  <meta name="description" content="VouchRail is the only Article 12 audit-log infrastructure that combines SDK integration, regulatory schema, tamper-evident hash chains, customer-owned storage, and GDPR-compatible PII handling — in a single product." />
+  <meta property="og:title" content="VouchRail — Article 12 audit log infrastructure" />
+  <meta property="og:description" content="One config line. EU AI Act Article 12 compliant. Framework-agnostic. Customer owns the data." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' x2='1' y1='0' y2='1'><stop offset='0' stop-color='%235eead4'/><stop offset='1' stop-color='%23a78bfa'/></linearGradient></defs><rect width='64' height='64' rx='14' fill='%2305060a'/><path fill='none' stroke='url(%23g)' stroke-width='4' stroke-linecap='round' stroke-linejoin='round' d='M12 40 L24 28 L36 40 L52 24'/><circle cx='12' cy='40' r='4' fill='url(%23g)'/><circle cx='24' cy='28' r='4' fill='url(%23g)'/><circle cx='36' cy='40' r='4' fill='url(%23g)'/><circle cx='52' cy='24' r='4' fill='url(%23g)'/></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="bg-mesh" aria-hidden="true"></div>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="#top">
+        <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true">
+          <defs>
+            <linearGradient id="brandGrad" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0" stop-color="#5eead4" />
+              <stop offset="1" stop-color="#a78bfa" />
+            </linearGradient>
+          </defs>
+          <path fill="none" stroke="url(#brandGrad)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" d="M10 42 L24 28 L36 40 L54 22" />
+          <circle cx="10" cy="42" r="4" fill="url(#brandGrad)" />
+          <circle cx="24" cy="28" r="4" fill="url(#brandGrad)" />
+          <circle cx="36" cy="40" r="4" fill="url(#brandGrad)" />
+          <circle cx="54" cy="22" r="4" fill="url(#brandGrad)" />
+        </svg>
+        <span class="brand-name">VouchRail</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#problem">Problem</a>
+        <a href="#five-stack">Five-Stack</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#schema">Schema</a>
+        <a href="#verticals">Verticals</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#roadmap">Roadmap</a>
+        <a href="#contact" class="nav-cta">Contact</a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="Open navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="eyebrow">
+          <span class="pulse"></span>
+          <span>EU AI Act Article 12 · Full enforcement <strong>2 Aug 2026</strong></span>
+        </div>
+        <h1 class="hero-title">
+          The audit-log layer<br />
+          your AI stack <span class="grad-text">is missing.</span>
+        </h1>
+        <p class="hero-sub">
+          VouchRail wraps your existing LLM calls and agent frameworks and emits
+          <em>tamper-evident, hash-chained, Article-12-structured</em> audit logs into
+          storage <em>you own</em>. One config line. Framework-agnostic. GDPR-compatible.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#contact">
+            <span>Get early access</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <a class="btn btn-ghost" href="#five-stack">See what makes it complete</a>
+        </div>
+
+        <div class="hero-meta">
+          <div class="meta-card" id="countdown">
+            <div class="meta-label">Days until enforcement</div>
+            <div class="meta-value" data-countdown>—</div>
+            <div class="meta-foot">Annex III standalone systems · 2 Aug 2026</div>
+          </div>
+          <div class="meta-card">
+            <div class="meta-label">Penalty ceiling</div>
+            <div class="meta-value">€15M <span class="muted">or 3% global turnover</span></div>
+            <div class="meta-foot">Article 12 violation, whichever higher</div>
+          </div>
+          <div class="meta-card">
+            <div class="meta-label">Retention minimum</div>
+            <div class="meta-value">6 mo <span class="muted">deployer · 7 yr provider</span></div>
+            <div class="meta-foot">GDPR conflict must be resolved</div>
+          </div>
+        </div>
+
+        <pre class="hero-code" aria-label="Quickstart code"><code><span class="t-c">// One config line. Article 12 compliant. Drops into your stack.</span>
+<span class="t-k">import</span> { <span class="t-v">AuditLogger</span> } <span class="t-k">from</span> <span class="t-s">'@vouchrail/sdk'</span>;
+<span class="t-k">import</span> <span class="t-v">Anthropic</span> <span class="t-k">from</span> <span class="t-s">'@anthropic-ai/sdk'</span>;
+
+<span class="t-k">const</span> <span class="t-v">audit</span> = <span class="t-k">new</span> <span class="t-v">AuditLogger</span>({
+  <span class="t-p">systemId</span>: <span class="t-s">'hireflow-resume-screener'</span>,
+  <span class="t-p">storage</span>: { <span class="t-p">type</span>: <span class="t-s">'s3'</span>, <span class="t-p">bucket</span>: <span class="t-s">'audit-eu-west-1'</span>, <span class="t-p">workMode</span>: <span class="t-b">true</span> },
+  <span class="t-p">retention</span>: { <span class="t-p">minimumDays</span>: <span class="t-n">180</span>, <span class="t-p">targetDays</span>: <span class="t-n">2555</span> },
+  <span class="t-p">hashChain</span>: { <span class="t-p">enabled</span>: <span class="t-b">true</span>, <span class="t-p">algorithm</span>: <span class="t-s">'sha256'</span> },
+  <span class="t-p">piiRedaction</span>: { <span class="t-p">strategy</span>: <span class="t-s">'pseudonymize'</span> },
+  <span class="t-p">signingKey</span>: <span class="t-v">process</span>.<span class="t-p">env</span>.<span class="t-p">AUDIT_SIGNING_KEY</span>,
+});
+
+<span class="t-k">const</span> <span class="t-v">anthropic</span> = <span class="t-v">audit</span>.<span class="t-fn">wrap</span>(<span class="t-k">new</span> <span class="t-v">Anthropic</span>());
+<span class="t-c">// Every call through `anthropic` now produces a verifiable Article 12 log entry.</span></code></pre>
+      </div>
+    </section>
+
+    <section id="problem" class="section">
+      <div class="section-head">
+        <span class="kicker">01 · The problem</span>
+        <h2>LangSmith is for debugging. <span class="grad-text">Regulators need something else.</span></h2>
+        <p>Every observability tool on the market was built for engineers triaging incidents — not for an EU regulator demanding a reconstructable decision trail six months from now.</p>
+      </div>
+
+      <div class="problem-grid">
+        <article class="problem-card">
+          <div class="x-mark" aria-hidden="true">×</div>
+          <h3>Plain logs · syslog · <code>print()</code></h3>
+          <p>Unstructured. Silently editable. No retention enforcement. No hash chain. Zero evidentiary value.</p>
+        </article>
+        <article class="problem-card">
+          <div class="x-mark" aria-hidden="true">×</div>
+          <h3>APM — Datadog APM, Sentry</h3>
+          <p>Designed for crash triage. No prompt-template versioning, no agent call tree, no tamper-evidence, retention SLA mismatched.</p>
+        </article>
+        <article class="problem-card">
+          <div class="x-mark" aria-hidden="true">×</div>
+          <h3>AI observability — LangSmith, Langfuse, Braintrust, Helicone, Weave</h3>
+          <p>Engineer debug + evals. <strong>Vendor controls storage</strong> — you can't prove no tampering. 30–90 day retention. Article-12 fields absent.</p>
+        </article>
+        <article class="problem-card">
+          <div class="x-mark" aria-hidden="true">×</div>
+          <h3>Blockchain attestation</h3>
+          <p>On-chain logs are immutable → <strong>incompatible with GDPR right-to-erasure</strong>. Public visibility leaks customer data. Per-action gas costs don't scale.</p>
+        </article>
+        <article class="problem-card">
+          <div class="x-mark" aria-hidden="true">×</div>
+          <h3>Static scanners — mcp-eu-ai-act, CodeSlick</h3>
+          <p>They <em>lint your code</em>; they don't record anything at runtime. Complementary tools — not Article 12 evidence.</p>
+        </article>
+        <article class="problem-card problem-card-strong">
+          <div class="x-mark x-mark-fix" aria-hidden="true">→</div>
+          <h3>VouchRail</h3>
+          <p>Runtime-integrated. Article-12-shaped. Hash-chained. <strong>Customer-owned storage.</strong> GDPR-compatible PII pipeline. The complete evidence chain.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="five-stack" class="section">
+      <div class="section-head">
+        <span class="kicker">02 · Five-Stack Completeness</span>
+        <h2>A real Article 12 solution needs <span class="grad-text">all five</span>. Today, nobody else ships them together.</h2>
+        <p>Attestation services prove existence but don't log. Scanners lint code but don't record. Observability tracks debug but not regulation. We deliver the entire evidence chain in one product.</p>
+      </div>
+
+      <ol class="stack-list">
+        <li class="stack-card" style="--i:1">
+          <div class="stack-num">01</div>
+          <div class="stack-body">
+            <h3>Production SDK integration</h3>
+            <p>Wraps raw Anthropic / OpenAI / Google SDKs plus agent frameworks (LangGraph, Anthropic Agent SDK, OpenAI Agents SDK, LlamaIndex). No code rewriting. Article 12 demands logging at the decision boundary — this is impossible without runtime integration.</p>
+            <div class="stack-tags"><span>TypeScript</span><span>Python</span><span>Sync · Async</span></div>
+          </div>
+        </li>
+        <li class="stack-card" style="--i:2">
+          <div class="stack-num">02</div>
+          <div class="stack-body">
+            <h3>Regulator-grade schema</h3>
+            <p>Every entry carries model identity, prompt template + version, input/output fingerprints, agentic call tree, operator identity, human-review record, reason codes, risk flags, retention bounds — mapped field-by-field to Article 12 paragraphs.</p>
+            <div class="stack-tags"><span>Article 12(1)–(3)</span><span>Article 14 oversight</span><span>Article 26(6) retention</span></div>
+          </div>
+        </li>
+        <li class="stack-card" style="--i:3">
+          <div class="stack-num">03</div>
+          <div class="stack-body">
+            <h3>Tamper-evident hash chain</h3>
+            <p>Each entry SHA-256-hashed in JCS-canonical form, linked to the previous entry, signed by a KMS-held key outside the agent trust boundary. WORM-locked storage. Logs without cryptographic integrity have zero court value.</p>
+            <div class="stack-tags"><span>SHA-256</span><span>RFC 8785 JCS</span><span>AWS KMS · Vault</span></div>
+          </div>
+        </li>
+        <li class="stack-card" style="--i:4">
+          <div class="stack-num">04</div>
+          <div class="stack-body">
+            <h3>Customer-owned storage</h3>
+            <p>Logs land in <em>your</em> S3 bucket (or compatible store) under <em>your</em> KMS keys with S3 Object Lock in Compliance mode. The evidentiary chain depends on the regulator believing the customer controls it — vendor-cloud logs are circumstantial.</p>
+            <div class="stack-tags"><span>EU-WEST-1 · EU-CENTRAL-1</span><span>Object Lock</span><span>SSE-KMS</span></div>
+          </div>
+        </li>
+        <li class="stack-card" style="--i:5">
+          <div class="stack-num">05</div>
+          <div class="stack-body">
+            <h3>GDPR-compatible PII handling</h3>
+            <p>Article 12 says <em>retain six months+</em>. GDPR says <em>delete on request</em>. We resolve the conflict: pseudonymized tokens in the log, raw values in a separate deletable escrow. Decisions stay reconstructable; individuals stay forgettable.</p>
+            <div class="stack-tags"><span>Pseudonymization</span><span>Key escrow</span><span>Dual-approval reveal</span></div>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section id="architecture" class="section">
+      <div class="section-head">
+        <span class="kicker">03 · Architecture</span>
+        <h2>An <span class="grad-text">additive</span> layer on the stack you already run.</h2>
+        <p>You keep LangSmith for debug, Datadog for ops, OneTrust for policy. VouchRail slots between your framework and your storage — never replaces, never blocks.</p>
+      </div>
+
+      <div class="arch-wrap">
+        <div class="arch-stack">
+          <div class="arch-layer arch-app">
+            <div class="arch-label">Application</div>
+            <div class="arch-text">Your product — resume scoring, credit decision, triage</div>
+          </div>
+          <div class="arch-layer arch-fw">
+            <div class="arch-label">Agent framework · raw SDK</div>
+            <div class="arch-text">LangGraph · Anthropic Agent SDK · OpenAI Agents SDK · LlamaIndex · Vercel AI · raw provider SDKs</div>
+          </div>
+          <div class="arch-layer arch-vr">
+            <div class="arch-label">VouchRail SDK</div>
+            <div class="arch-text">wraps LLM calls · structures Article 12 entries · computes hash chain · applies PII policy</div>
+            <div class="arch-pill">our product</div>
+          </div>
+          <div class="arch-layer arch-prov">
+            <div class="arch-label">LLM provider</div>
+            <div class="arch-text">Anthropic · OpenAI · Google · Bedrock · Azure · self-hosted</div>
+          </div>
+          <div class="arch-down" aria-hidden="true">
+            <div class="arch-down-text">signed · hash-chained JSONL</div>
+            <svg viewBox="0 0 24 60" width="24" height="60"><path d="M12 0 V52 M6 46 L12 56 L18 46" stroke="url(#brandGrad)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          </div>
+          <div class="arch-layer arch-store">
+            <div class="arch-label">Customer-owned storage</div>
+            <div class="arch-text">S3 + Object Lock · SSE-KMS · EU region of your choice · 7-year WORM retention</div>
+          </div>
+          <div class="arch-down" aria-hidden="true">
+            <svg viewBox="0 0 24 60" width="24" height="60"><path d="M12 0 V52 M6 46 L12 56 L18 46" stroke="url(#brandGrad)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          </div>
+          <div class="arch-layer arch-portal">
+            <div class="arch-label">Auditor portal · CLI <span class="phase-tag">phase 3</span></div>
+            <div class="arch-text">case lookup · hash-chain verification · GDPR-aware reveal · regulator-ready PDF export</div>
+          </div>
+        </div>
+
+        <div class="chain-vis" aria-hidden="true">
+          <div class="chain-title">Live hash chain</div>
+          <div class="chain-track" id="chainTrack"></div>
+          <div class="chain-foot">Each entry's <code>entryHash</code> seeds the next. Tampering one entry breaks the chain visibly downstream.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="schema" class="section">
+      <div class="section-head">
+        <span class="kicker">04 · The schema is the contract</span>
+        <h2>Field-for-field <span class="grad-text">traceable to the regulation.</span></h2>
+        <p>Same on-disk shape across TypeScript and Python SDKs. Byte-identical canonicalisation. Cross-language conformance vectors gate every release.</p>
+      </div>
+
+      <pre class="schema-block"><code><span class="t-c">// One audit log entry — mapped to Article 12 paragraphs</span>
+{
+  <span class="t-p">"callId"</span>:               <span class="t-s">"7b0d3a14-7f4f-4f12-9e90-3b1b9a16c2c1"</span>,
+  <span class="t-p">"parentCallId"</span>:         <span class="t-s">"4a1c9b22-..."</span>,            <span class="t-c">// Article 12(2) — agentic call tree</span>
+  <span class="t-p">"caseId"</span>:               <span class="t-s">"candidate-12345"</span>,
+  <span class="t-p">"systemId"</span>:             <span class="t-s">"hireflow-resume-screener"</span>,
+
+  <span class="t-p">"startedAt"</span>:            <span class="t-s">"2026-08-15T14:32:00.123456Z"</span>, <span class="t-c">// Article 12(3)(a)</span>
+  <span class="t-p">"endedAt"</span>:              <span class="t-s">"2026-08-15T14:32:01.987654Z"</span>,
+  <span class="t-p">"durationMs"</span>:           <span class="t-n">1864</span>,
+
+  <span class="t-p">"modelProvider"</span>:        <span class="t-s">"anthropic"</span>,                  <span class="t-c">// Article 12(2)(a) · Article 11 traceability</span>
+  <span class="t-p">"modelName"</span>:            <span class="t-s">"claude-3-5-sonnet"</span>,
+  <span class="t-p">"modelVersion"</span>:         <span class="t-s">"20241022"</span>,
+  <span class="t-p">"modelConfiguration"</span>:   { <span class="t-p">"temperature"</span>: <span class="t-n">0.2</span>, <span class="t-p">"maxTokens"</span>: <span class="t-n">1024</span> },
+
+  <span class="t-p">"promptTemplateId"</span>:     <span class="t-s">"resume-scoring-v3"</span>,
+  <span class="t-p">"promptTemplateVersion"</span>: <span class="t-s">"3.2.1"</span>,
+  <span class="t-p">"promptFingerprint"</span>:    <span class="t-s">"sha256:8f3a…b921"</span>,
+
+  <span class="t-p">"inputFingerprint"</span>:     <span class="t-s">"sha256:2c91…7e0d"</span>,           <span class="t-c">// Article 12(3)(c)</span>
+  <span class="t-p">"inputPiiRedacted"</span>:     {
+    <span class="t-p">"fields"</span>:       [<span class="t-s">"name"</span>, <span class="t-s">"email"</span>, <span class="t-s">"phone"</span>],
+    <span class="t-p">"pseudonymKey"</span>: <span class="t-s">"escrow:pii-2026-08:abc123"</span>  <span class="t-c">// GDPR-deletable</span>
+  },
+
+  <span class="t-p">"toolCalls"</span>: [
+    { <span class="t-p">"toolName"</span>: <span class="t-s">"resume_parser"</span>, <span class="t-p">"inputFingerprint"</span>: <span class="t-s">"sha256:…"</span>, <span class="t-p">"outputFingerprint"</span>: <span class="t-s">"sha256:…"</span> }
+  ],
+
+  <span class="t-p">"outputFingerprint"</span>:    <span class="t-s">"sha256:91ab…c204"</span>,
+  <span class="t-p">"outputDecision"</span>:        { <span class="t-p">"score"</span>: <span class="t-n">7.5</span>, <span class="t-p">"recommended"</span>: <span class="t-b">true</span> },
+  <span class="t-p">"reasonCodes"</span>:           [<span class="t-s">"EXPERIENCE_MATCH"</span>, <span class="t-s">"EDUCATION_OK"</span>],
+
+  <span class="t-p">"operatorId"</span>:           <span class="t-s">"system"</span>,                       <span class="t-c">// Article 14 · Article 12(3)(d)</span>
+  <span class="t-p">"humanReview"</span>:          {
+    <span class="t-p">"reviewerId"</span>:    <span class="t-s">"ops-emma"</span>,
+    <span class="t-p">"reviewedAt"</span>:    <span class="t-s">"2026-08-15T14:35:00Z"</span>,
+    <span class="t-p">"decision"</span>:      <span class="t-s">"approve"</span>
+  },
+  <span class="t-p">"riskFlags"</span>:            [<span class="t-s">"low_confidence"</span>],
+
+  <span class="t-p">"entryHash"</span>:            <span class="t-s">"sha256:5d41…a8c2"</span>,           <span class="t-c">// tamper-evidence</span>
+  <span class="t-p">"previousEntryHash"</span>:    <span class="t-s">"sha256:f102…9b3e"</span>,
+  <span class="t-p">"signature"</span>:            <span class="t-s">"kms:eu-west-1:…:sig"</span>,
+
+  <span class="t-p">"schemaVersion"</span>:        <span class="t-s">"vouchrail-v1.0"</span>,
+  <span class="t-p">"recordedBy"</span>:           <span class="t-s">"@vouchrail/sdk@1.0.0"</span>
+}</code></pre>
+    </section>
+
+    <section id="verticals" class="section">
+      <div class="section-head">
+        <span class="kicker">05 · Built for Annex III</span>
+        <h2>Each vertical ships with its own <span class="grad-text">playbook pack.</span></h2>
+        <p>Pre-tuned PII patterns, reason-code libraries, FRIA templates, reference integrations. Generic compliance products lose vertical bake-offs.</p>
+      </div>
+
+      <div class="vert-grid">
+        <article class="vert-card">
+          <div class="vert-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 11h-6M19 8v6"/></svg>
+          </div>
+          <h3>HR Tech · AI recruiting</h3>
+          <p>Largest single Annex III category. Resume scoring, automated screening, interview ranking. Pre-tuned for CV PII — name, education, employment history.</p>
+          <div class="vert-tags"><span>Greenhouse</span><span>Workday</span><span>Lever</span><span>Eightfold</span></div>
+        </article>
+        <article class="vert-card">
+          <div class="vert-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="6" y1="15" x2="10" y2="15"/></svg>
+          </div>
+          <h3>Fintech · credit scoring</h3>
+          <p>AI lending decisions, creditworthiness, BNPL underwriting. Reason codes mapped to EBA adverse-action guidance. Audit defence kit for AI-driven denials.</p>
+          <div class="vert-tags"><span>Affirm-class</span><span>Klarna-class</span><span>Bank-grade</span></div>
+        </article>
+        <article class="vert-card">
+          <div class="vert-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0z"/><path d="M12 7v5l3 2"/></svg>
+          </div>
+          <h3>Insurtech · AI underwriting</h3>
+          <p>Risk pricing, claim assessment, parametric triggers. Capture model lineage + decision rationale across portfolio shifts.</p>
+          <div class="vert-tags"><span>Parametric</span><span>Claim AI</span><span>Pricing</span></div>
+        </article>
+        <article class="vert-card">
+          <div class="vert-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.5-1.5 3-3.6 3-6a4 4 0 0 0-8 0c0-2.4-1.5-4-3.5-4S7 5.6 7 8c0 2.4 1.5 4.5 3 6L12 16l7-2z"/><path d="M12 16v6"/></svg>
+          </div>
+          <h3>AI healthcare</h3>
+          <p>AI triage, mental-health pre-screen, radiology pre-read (non-medical-device). NHS-number redaction, GDPR-Article-9 sensitive-data discipline.</p>
+          <div class="vert-tags"><span>Triage</span><span>Pre-screen</span><span>Imaging</span></div>
+        </article>
+        <article class="vert-card">
+          <div class="vert-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 4 2 10l10 6 10-6Z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg>
+          </div>
+          <h3>AI education · assessment</h3>
+          <p>Essay scoring, placement testing, automated proctoring. Reason codes auditable against academic integrity standards.</p>
+          <div class="vert-tags"><span>Essay AI</span><span>Proctoring</span><span>Placement</span></div>
+        </article>
+        <article class="vert-card">
+          <div class="vert-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4-9 4z"/><path d="M3 7v10l9 4 9-4V7"/></svg>
+          </div>
+          <h3>Cross-jurisdiction by design</h3>
+          <p>One schema satisfies EU AI Act Article 12, UK AI framework, Canadian AIDA, US OMB M-26-04, NIST AI RMF, ISO/IEC 42001, draft Japanese AI Act.</p>
+          <div class="vert-tags"><span>EU · UK</span><span>US · CA</span><span>JP · ISO</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="pricing" class="section">
+      <div class="section-head">
+        <span class="kicker">06 · Pricing</span>
+        <h2>Open-source first. <span class="grad-text">Managed on top.</span></h2>
+        <p>SDK is Apache 2.0 forever. You can run it entirely on your own S3. Paid tiers add managed storage, multi-region, full PII workflow, and the auditor portal.</p>
+      </div>
+
+      <div class="price-grid">
+        <article class="price-card">
+          <div class="price-name">OSS · self-hosted</div>
+          <div class="price-amount">$0</div>
+          <div class="price-meta">unlimited events</div>
+          <ul>
+            <li>SDK + CLI · Apache 2.0</li>
+            <li>Your S3 · your KMS</li>
+            <li>Hash-chain verifier</li>
+            <li>Community support</li>
+          </ul>
+          <a class="btn btn-ghost btn-full" href="#contact">Get the SDK</a>
+        </article>
+        <article class="price-card">
+          <div class="price-name">Starter</div>
+          <div class="price-amount">$99<span>/mo</span></div>
+          <div class="price-meta">1M events / mo</div>
+          <ul>
+            <li>Hosted storage · 1 region</li>
+            <li>Basic dashboard</li>
+            <li>Email support</li>
+            <li>Retention policy enforcement</li>
+          </ul>
+          <a class="btn btn-ghost btn-full" href="#contact">Talk to us</a>
+        </article>
+        <article class="price-card price-card-feat">
+          <div class="price-tag">Most popular</div>
+          <div class="price-name">Pro</div>
+          <div class="price-amount">$499<span>/mo</span></div>
+          <div class="price-meta">10M events / mo</div>
+          <ul>
+            <li>Multi-region · EU + US</li>
+            <li>Full PII redaction + key escrow</li>
+            <li>GDPR reveal workflow</li>
+            <li>Priority support · SLA</li>
+          </ul>
+          <a class="btn btn-primary btn-full" href="#contact">Start with Pro</a>
+        </article>
+        <article class="price-card">
+          <div class="price-name">Business</div>
+          <div class="price-amount">$2,000<span>/mo</span></div>
+          <div class="price-meta">100M events / mo</div>
+          <ul>
+            <li>Auditor portal (compliance UI)</li>
+            <li>Dual-approval reveal</li>
+            <li>Premium SLA</li>
+            <li>Quarterly compliance review</li>
+          </ul>
+          <a class="btn btn-ghost btn-full" href="#contact">Book a demo</a>
+        </article>
+        <article class="price-card">
+          <div class="price-name">Enterprise</div>
+          <div class="price-amount">Custom</div>
+          <div class="price-meta">unlimited · $20K–$200K / yr</div>
+          <ul>
+            <li>SSO · mTLS · dedicated region</li>
+            <li>Custom retention · custom schema</li>
+            <li>Named compliance advisor</li>
+            <li>SOC 2 · ISO 27001 in scope</li>
+          </ul>
+          <a class="btn btn-ghost btn-full" href="#contact">Talk to sales</a>
+        </article>
+      </div>
+    </section>
+
+    <section id="roadmap" class="section">
+      <div class="section-head">
+        <span class="kicker">07 · Roadmap</span>
+        <h2>From SDK to <span class="grad-text">regulator-ready evidence chain.</span></h2>
+        <p>OSS-first distribution, hosted storage, then the auditor portal that turns logs into a PDF a regulator can read.</p>
+      </div>
+
+      <ol class="timeline">
+        <li>
+          <div class="t-phase">Phase 1 · MVP</div>
+          <div class="t-when">Now → 8 weeks</div>
+          <ul>
+            <li>TypeScript SDK · wraps Anthropic + OpenAI</li>
+            <li>Article 12 schema · SHA-256 hash chain</li>
+            <li>Local FS + AWS S3 backends</li>
+            <li>CLI: <code>query</code> · <code>verify</code> · <code>export</code></li>
+            <li>Apache 2.0 · public on GitHub</li>
+          </ul>
+        </li>
+        <li>
+          <div class="t-phase">Phase 1.5 · Python parity</div>
+          <div class="t-when">Month 3–4</div>
+          <ul>
+            <li>Python SDK with sync + async wrappers</li>
+            <li>Cross-language conformance vectors</li>
+            <li>LangChain · LangGraph callback handlers</li>
+            <li>Hosted Starter tier · Stripe billing</li>
+          </ul>
+        </li>
+        <li>
+          <div class="t-phase">Phase 2 · Trust + depth</div>
+          <div class="t-when">Month 5–8</div>
+          <ul>
+            <li>SOC 2 Type 1 in motion</li>
+            <li>Anthropic + OpenAI Agents SDK adapters</li>
+            <li>Full PII redaction + key escrow</li>
+            <li>Vercel AI SDK middleware · Langfuse bridge</li>
+          </ul>
+        </li>
+        <li>
+          <div class="t-phase">Phase 3 · Auditor portal</div>
+          <div class="t-when">Month 9–15</div>
+          <ul>
+            <li>Compliance-officer web UI</li>
+            <li>Dual-approval GDPR reveal workflow</li>
+            <li>Regulator-ready PDF evidence export</li>
+            <li>LlamaIndex · CrewAI · AutoGen · Pydantic AI</li>
+            <li>Vertical playbook packs (HR, fintech, healthcare)</li>
+          </ul>
+        </li>
+      </ol>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="section-head">
+        <span class="kicker">08 · Talk to me</span>
+        <h2>Direct line to the founder. <span class="grad-text">No funnel, no SDR.</span></h2>
+        <p>Building VouchRail as a Taiwan-based solo technical founder. If you're running high-risk AI in the EU, drop a line and I'll respond personally.</p>
+      </div>
+
+      <div class="contact-wrap">
+        <form class="contact-form" id="contactForm" novalidate>
+          <div class="field">
+            <label for="cf-name">Name</label>
+            <input id="cf-name" name="name" type="text" autocomplete="name" required placeholder="Your name" />
+          </div>
+          <div class="field">
+            <label for="cf-email">Email</label>
+            <input id="cf-email" name="email" type="email" autocomplete="email" required placeholder="you@company.com" />
+          </div>
+          <div class="field field-row">
+            <div>
+              <label for="cf-company">Company</label>
+              <input id="cf-company" name="company" type="text" autocomplete="organization" placeholder="Optional" />
+            </div>
+            <div>
+              <label for="cf-role">Role</label>
+              <input id="cf-role" name="role" type="text" autocomplete="organization-title" placeholder="Engineer · Compliance · Founder" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="cf-vertical">Vertical</label>
+            <select id="cf-vertical" name="vertical">
+              <option value="">Select one (optional)</option>
+              <option>HR · recruiting AI</option>
+              <option>Fintech · credit / lending</option>
+              <option>Insurtech · underwriting</option>
+              <option>Healthcare AI</option>
+              <option>Education · assessment</option>
+              <option>Other Annex III</option>
+              <option>Not yet sure</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="cf-message">Message</label>
+            <textarea id="cf-message" name="message" rows="5" required placeholder="What's your Article 12 blocker today? What does your stack look like?"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">
+            <span>Open mail · send to founder</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="m22 2-7 20-4-9-9-4 20-7Z"/></svg>
+          </button>
+          <p class="form-foot">
+            On submit your default mail client opens with a pre-filled message to
+            <a href="mailto:jeffry1829@gmail.com" class="link">jeffry1829@gmail.com</a>.
+            No tracking, no third-party form handler — it's a static site.
+          </p>
+          <div class="form-status" id="formStatus" role="status" aria-live="polite"></div>
+        </form>
+
+        <aside class="contact-side">
+          <div class="contact-card">
+            <div class="contact-card-label">Email</div>
+            <a class="contact-card-value" href="mailto:jeffry1829@gmail.com">jeffry1829@gmail.com</a>
+            <div class="contact-card-foot">Personal inbox · expect a reply within 24h on weekdays</div>
+          </div>
+          <div class="contact-card">
+            <div class="contact-card-label">Base</div>
+            <div class="contact-card-value">Taipei, Taiwan</div>
+            <div class="contact-card-foot">UTC+8 · happy to do EU-morning / US-evening calls</div>
+          </div>
+          <div class="contact-card">
+            <div class="contact-card-label">What helps me reply faster</div>
+            <ul class="contact-list">
+              <li>Your current LLM / agent stack</li>
+              <li>Which Annex III category you fall into</li>
+              <li>Whether you already have an observability tool</li>
+              <li>Hard deadline (audit, customer ask, RFP)</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true">
+          <path fill="none" stroke="url(#brandGrad)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" d="M10 42 L24 28 L36 40 L54 22" />
+          <circle cx="10" cy="42" r="4" fill="url(#brandGrad)" />
+          <circle cx="24" cy="28" r="4" fill="url(#brandGrad)" />
+          <circle cx="36" cy="40" r="4" fill="url(#brandGrad)" />
+          <circle cx="54" cy="22" r="4" fill="url(#brandGrad)" />
+        </svg>
+        <span>VouchRail</span>
+      </div>
+      <p class="footer-line">The audit-log layer your AI stack is missing.</p>
+      <div class="footer-cols">
+        <div>
+          <div class="footer-h">Product</div>
+          <a href="#five-stack">Five-Stack Completeness</a>
+          <a href="#architecture">Architecture</a>
+          <a href="#schema">Schema</a>
+          <a href="#pricing">Pricing</a>
+        </div>
+        <div>
+          <div class="footer-h">Use cases</div>
+          <a href="#verticals">HR tech</a>
+          <a href="#verticals">Fintech credit</a>
+          <a href="#verticals">Healthcare AI</a>
+          <a href="#verticals">Education</a>
+        </div>
+        <div>
+          <div class="footer-h">Company</div>
+          <a href="#roadmap">Roadmap</a>
+          <a href="#contact">Contact</a>
+          <a href="mailto:jeffry1829@gmail.com">Email</a>
+        </div>
+      </div>
+      <div class="footer-meta">
+        <span>© <span id="year">2026</span> VouchRail. Apache 2.0 SDK · Delaware C-Corp serving the EU.</span>
+        <span class="footer-disclaimer">Not legal advice. Article 12 interpretation evolves; we ship the infrastructure assuming you've already classified your system.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./script.js" defer></script>
+</body>
+</html>
