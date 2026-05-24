@@ -107,13 +107,13 @@ h1, h2, h3 { margin: 0; line-height: 1.1; letter-spacing: -0.02em; font-weight: 
 .brand-mark { width: 28px; height: 28px; }
 .brand-name { font-size: 17px; }
 .brand-img {
-  height: 32px;
+  height: 44px;
   width: auto;
-  max-height: 32px;
-  max-width: 160px;
+  max-height: 44px;
+  max-width: 220px;
   display: block;
   object-fit: contain;
-  filter: drop-shadow(0 0 16px rgba(94, 234, 212, 0.18));
+  filter: drop-shadow(0 0 18px rgba(94, 234, 212, 0.22));
 }
 .nav-links {
   display: flex;
@@ -925,13 +925,13 @@ a.contact-card-value:hover { color: #fff; }
 }
 .footer-brand .brand-mark { width: 26px; height: 26px; }
 .footer-brand-img {
-  height: 36px;
+  height: 44px;
   width: auto;
-  max-height: 36px;
-  max-width: 180px;
+  max-height: 44px;
+  max-width: 220px;
   display: block;
   object-fit: contain;
-  filter: drop-shadow(0 0 16px rgba(94, 234, 212, 0.18));
+  filter: drop-shadow(0 0 18px rgba(94, 234, 212, 0.22));
 }
 .footer-line {
   color: var(--text-dim);
